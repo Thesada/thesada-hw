@@ -4,8 +4,9 @@ Hardware for the [thesada](https://github.com/Thesada) property monitoring
 platform. Designed in EasyEDA Pro.
 
 [`base-carrier-v0.2/`](base-carrier-v0.2/) holds the project source (`.epro`),
-the schematic PDF, a 4-layer Gerber and drill set ready to order, the BOM with
-LCSC part numbers, the pick-and-place file and the netlist.
+the schematic and board PDFs, a 4-layer Gerber and drill set ready to order, the
+BOM with LCSC part numbers, the pick-and-place file, the netlist and a STEP 3D
+model (zipped) for enclosure work.
 
 ## base carrier v0.2
 
