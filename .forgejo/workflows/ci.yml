@@ -1,0 +1,24 @@
+# Repo gate: render both case variants in the pinned OpenSCAD image (asserts fail the build),
+# overhang check, STL freshness, DCO and sanitize on the PR commits. Host-mode runner with docker.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: {}
+
+concurrency:
+  group: ci-${{ github.event_name == 'pull_request' && github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: heavy
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: .forgejo/ci-run.sh setup
+      # PR: DCO and sanitize cover the PR commits. Push to main: BASE is HEAD, the range is empty.
+      - run: .forgejo/ci-run.sh test BASE="${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || 'HEAD' }}"
