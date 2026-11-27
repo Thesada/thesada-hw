@@ -27,9 +27,6 @@ modem. This is the board that is built and running; the firmware is
 v0.1 came back from the fab, was assembled and tested, and dropped one part
 that did not belong (D2). v0.2 is that fix and the revision to build.
 
-Earlier carrier revisions and other board designs are kept privately until they
-are built.
-
 ## thesada node case
 
 ![closed](enclosure/node/png/assembly.png)
@@ -52,7 +49,7 @@ make, git and python3 are needed.
 | `overhang` | `check_overhang.py` on every fresh render |
 | `fresh` | each committed STL is the geometry a fresh render gives (bounding box, volume, area, vertices within 0.001 mm, OpenSCAD output is not byte-stable) |
 | `dco` | every commit since `BASE` is authored as and signed off by the `DCO_EMAIL` address |
-| `sanitize` | no private IPs, internal host names, local paths, secret shapes or AI traces in the lines and commit messages since `BASE` |
+| `sanitize` | no private IPs, internal host names, local paths, secret shapes or unexpected commit trailers in the lines and commit messages since `BASE` |
 | `selftest` | each check above fails on a seeded bad input |
 
 `make build` re-exports every STL and PNG. Commit them with the source change,

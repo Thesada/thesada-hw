@@ -61,7 +61,7 @@ git -c user.email=someone@example.com commit -q --allow-empty -s -m "chore: othe
 expect fail dco-author "$root/tools/check-dco.sh" base "$ok_mail"
 git reset -q --hard HEAD~1
 
-d=Develop; a=anth
+d=Develop
 seeds=(
   "private IP|host 10.2$(printf .)3.4"
   "internal host|see git$(printf .)o""ps.example$(printf .)ca"
@@ -69,7 +69,6 @@ seeds=(
   "private key|-----BEGIN RSA PRIVATE ""KEY-----"
   "token shape|ghp_$(printf 'a%.0s' {1..36})"
   "secret assignment|pass""word = hunter2hunter2xx"
-  "AI trace|Co-Authored""-By: bot <noreply@$a""ropic.com>"
 )
 for s in "${seeds[@]}"; do
   label="${s%%|*}"; line="${s#*|}"; name="sanitize-${label// /-}"
@@ -78,8 +77,14 @@ for s in "${seeds[@]}"; do
   has "\[$label\]" "$name" || { echo "BAD  $name did not name [$label]"; fails=1; }
   git reset -q --hard HEAD~1
 done
-git commit -q --allow-empty -s -m "chore: seed" -m "Generated with Clau""de Code"
-expect fail sanitize-commit-message python3 "$root/tools/sanitize.py" base
+git commit -q --allow-empty -s -m "chore: seed" -m "Reviewed-By: someone"
+expect fail sanitize-trailer python3 "$root/tools/sanitize.py" base
+has "\[trailer\]" sanitize-trailer || { echo "BAD  sanitize-trailer did not name [trailer]"; fails=1; }
+git reset -q --hard HEAD~1
+extra=$(mktemp); printf 'zzseedzz\n' > "$extra"
+printf 'zzseedzz\n' > seed.txt && git add seed.txt && git commit -q -s -m "chore: seed"
+SANITIZE_EXTRA="$extra" expect fail sanitize-extra python3 "$root/tools/sanitize.py" base
+git reset -q --hard HEAD~1; rm -f "$extra"
 
 cd "$root"
 [ "$fails" = 0 ] && echo "selftest: every check fires" || { echo "selftest: FAILED"; exit 1; }

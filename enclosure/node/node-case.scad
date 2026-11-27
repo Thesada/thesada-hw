@@ -190,10 +190,10 @@ sma_cl_d = 11;                // nut (8 across flats, 9.2 across corners) and lo
 sma_depth = 12;               // body and pigtail crimp behind the inner face, a guess: check: calipers
 // GNSS patch faces up under the lid, in the strip no board covers (x < 28), far from the carrier ground.
 // LTE flex lies flat on the right inner wall, 10 mm or more from every metal part (asserted below)
-gps_patch = [25, 25, 7];      // x, y, thickness. 25 x 25 from the part, 7 measured 2026-11-26
+gps_patch = [25, 25, 7];      // x, y, thickness. 25 x 25 from Daniel, 7 measured by Daniel 2026-11-26
 gps_xy = [10.8, 96];          // centre, case frame, as far from the LILYGO edge as the lid pocket allows
 gps_metal = 7;                // GNSS patch to the nearest metal, the lid height follows it
-lte_fpc = [110, 20, 0.4];     // length along y, width, thickness. 110 x 20 test-fitted, 0.4 or less, measured 2026-11-26
+lte_fpc = [110, 20, 0.4];     // length along y, width, thickness. 110 x 20 test-fitted by Daniel, 0.4 or less, measured by Daniel 2026-11-26
 lte_seat_h = 2;               // corner locators for the flex, glued like the GNSS patch
 ant_gap = 10;                 // wanted gap to metal (inserts, screws, battery, board ground)
 ipex_gnss = [30.0, 116.55];   // check: GNSS u.FL position on the LILYGO, assumed next to the LTE u.FL

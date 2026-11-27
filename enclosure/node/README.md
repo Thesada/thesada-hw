@@ -4,7 +4,7 @@ SPDX-License-Identifier: CERN-OHL-P-2.0
 
 # thesada node case
 
-A printed, gasket-sealed wall case for a thesada node: the [base carrier](../../base-carrier-v0.2/)
+A printed, gasket-sealed wall case for a thesada node: the [base carrier](../../base-carrier/)
 at the bottom and a LILYGO T-SIM7080G-S3 on top of it on long stacking pins, the
 18650 cell under the LILYGO in the gap. PETG body and lid, a printed TPU gasket, a
 recessed port panel with TPU boots for the two 3.5 mm jacks, four PG7 knockouts for the 1-Wire probes
@@ -33,7 +33,7 @@ on the wall. The LILYGO buttons, switch and SD card sit right under the lid.
 
 | Fact | Value | Source |
 |---|---|---|
-| Carrier outline | 76.2 x 63.5 mm | `base-carrier-v0.2/Gerber_base-carrier-v0.2.zip`, `Gerber_BoardOutlineLayer.GKO` |
+| Carrier outline | 76.2 x 63.5 mm | `base-carrier/v0.2/Gerber.zip`, `Gerber_BoardOutlineLayer.GKO` |
 | Carrier mounting holes | 4x 3.2 mm at 4.064 mm from each edge | `Drill_NPTH_Through.DRL`, tool T02 |
 | Carrier thickness, part heights | 1.59 mm, XH 7.0 mm, female header 8.5 mm | carrier STEP model |
 | Carrier header rows | U1_A2 x 29.46, U1_A1 x 59.94, pins y 12.95 to 51.05 | `PickAndPlace.csv` |
@@ -45,8 +45,8 @@ on the wall. The LILYGO buttons, switch and SD card sit right under the lid.
 | USB-C | 3.15 mm tall, centre 1.58 above the LILYGO top, mouth 0.2 past the edge | vendor STEP |
 | Tallest LILYGO top part | 5.0 mm (PH2.0 connector) | vendor STEP |
 | Stack order | carrier bottom, LILYGO on top on stacking pins, cell in between | photos of the built node |
-| Gap carrier top to LILYGO underside | 29.8 to 30 mm, design uses 30.0 | calipers, 2026-11-22 |
-| XH plug height | 7 mm | calipers, 2026-11-22 |
+| Gap carrier top to LILYGO underside | 29.8 to 30 mm, design uses 30.0 | calipers, Daniel, 2026-11-22 |
+| XH plug height | 7 mm | calipers, Daniel, 2026-11-22 |
 
 Vendor DXF: <https://raw.githubusercontent.com/Xinyuan-LilyGO/LilyGo-T-SIM7080G/master/dwg/T-SIM7080G.DXF>.
 Vendor STEP: LILYGO's T-SIM7080-S3 3D model, read with FreeCAD `freecadcmd`.
@@ -126,7 +126,7 @@ carrier draft. Base carrier v0.2 has its own 1 x 20 sockets for it, and every pi
 | Board | x 30.7 to 58.7, y 1.5 to 52.3 on the carrier, turned 180 deg like the LILYGO, underside z 20.03 |
 | PCB antenna | overhangs the carrier bottom edge, y -4.7 to 2.2. 12.7 to the carrier ground below, 28.9 to the nearest screw or insert, 11.5 to the inner wall. No plastic over it but the lid |
 | Free end | none: the 2 x 20 pins run the full board length. The module overhang carries the antenna and stays free |
-| Lid rib | off (`fre_hold = false`, 2026-11-26). Under the 53 body it would hang 31 tall and 2.4 thin from the lid and break. The 40 header pins hold the board. `fre_hold = true` brings back the rib, 0.5 over the USB-C shells |
+| Lid rib | off (`fre_hold = false`, Daniel 2026-11-26). Under the 53 body it would hang 31 tall and 2.4 thin from the lid and break. The 40 header pins hold the board. `fre_hold = true` brings back the rib, 0.5 over the USB-C shells |
 | USB-C with the lid off | reachable. Centre z 22.9, 22.5 mm free from the mouth to the inner wall, the rim chamfer starts at z 35.4. A right-angle plug fits, a straight plug fits if plug and strain relief are 15 mm or less (it needs the 6.7 mm insertion travel too). Check: your cable |
 | EN and BOOT | reachable from the top with the lid off |
 
@@ -153,7 +153,7 @@ beside the old x 12 locknut: 2.5 mm off the USB-C plug path. `dcjack_fre = false
 ### Probe glands (Freenove)
 
 All four PG7 knockouts sit on the right wall (x max), the wall nearest the 1-Wire connectors J3A-D at
-x 68.58 (2026-11-26). The DC jack stays in the end wall. Positions are derived, the same rule
+x 68.58 (Daniel, 2026-11-26). The DC jack stays in the end wall. Positions are derived, the same rule
 as the LILYGO case (see [Probe glands](#probe-glands)): between the corner screw columns, staggered in
 two rows here because one row does not fit. The straight wall
 between the columns leaves 49.9 mm for the gland centres, one row at 25 mm pitch needs 75. The upper row
@@ -192,7 +192,7 @@ locknuts get a spot face in the rim chamfer, the same teardrop pocket as the DC 
 | `plug_h`, `wire_bend` | 7.0, 5.0 | XH plug height (measured) and a bend allowance above it. `car_top_h` = header 7 + plug + bend = 19 |
 | `plug_d` | 8.8 | 3.5 mm plug body, calipers: ribbed, no thread. Boot bore is plug_d - 0.4 (8.4) for a light squeeze on the ribs |
 | `cable_d` | 4.0 | DS18B20 probe cable diameter, calipers (PG7 clamps 3 to 6.5 mm) |
-| `dcjack_thread`, `dcjack_depth`, `dcjack_flange_d` | 9, 14, 11 | DC jack thread length, depth behind the panel, front flange. Guesses. Body 7.8 with 6.8 flats and nut 11 across corners are measured. A jack 12.9 or less deep clears the carrier edge and could sit beside J1A at the jack height |
+| `dcjack_thread`, `dcjack_depth`, `dcjack_flange_d` | 9, 14, 11 | DC jack thread length, depth behind the panel, front flange. Guesses. Body 7.8 with 6.8 flats and nut 11 across corners are from Daniel. A jack 12.9 or less deep clears the carrier edge and could sit beside J1A at the jack height |
 | `vent_patch_d` | 12 | adhesive ePTFE vent patch on the bottom wall |
 | `ad_thread_d` | 12.2 | printed PG7 thread of the adapter. Test-fit the locknut first |
 | `material`, `lid_insert`, `pcb_insert` | pla, m3_small, m3_small | `[pla, petg, abs]` and `[m3_large, m3_small]` per use (lid columns, carrier standoffs). Pick `ins_d` and `ins_wall` from one table in the scad. Pick the row for what you print and press in, then check it on the matching fine coupon |
@@ -236,8 +236,8 @@ locknuts get a spot face in the rim chamfer, the same teardrop pocket as the DC 
 | `ad_*` | | `dcjack_adapter`: boss 17 across flats, 2.0 front plate, PG7 thread 12.2 x 10.4 |
 | `lte_antenna` | `lid` | `lid`: the flex glued under the lid between four corner locators. `sma`: no flex, external antenna in the SMA knockout. See [Antennas](#antennas) |
 | `sma_d`, `sma_cl_d`, `sma_depth` | 6.6, 11, 12 | SMA bulkhead knockout in the top wall (always cut), nut and washer clearance, body depth behind the wall (guess) |
-| `lte_fpc`, `lte_seat_h` | 110 x 20 x 0.4, 2 | LTE flex length, width, thickness (0.4 or less, measured 2026-11-26), corner locator height. Position derived from the lid screws, asserted 10 mm from metal |
-| `gps_patch`, `gps_xy`, `gps_metal`, `ant_gap` | 25 x 25 x 7, [10.8, 96], 7, 10 | GNSS patch under the lid in the strip no board covers, four corner ribs hold it (7 thick, measured 2026-11-26). `gps_metal` to the LILYGO edge sets the body height. Asserted inside the lid pocket and clear of metal |
+| `lte_fpc`, `lte_seat_h` | 110 x 20 x 0.4, 2 | LTE flex length, width, thickness (0.4 or less, Daniel 2026-11-26), corner locator height. Position derived from the lid screws, asserted 10 mm from metal |
+| `gps_patch`, `gps_xy`, `gps_metal`, `ant_gap` | 25 x 25 x 7, [10.8, 96], 7, 10 | GNSS patch under the lid in the strip no board covers, four corner ribs hold it (7 thick, Daniel 2026-11-26). `gps_metal` to the LILYGO edge sets the body height. Asserted inside the lid pocket and clear of metal |
 | `ipex_gnss` | [30, 116.55] | GNSS u.FL position for the preview cable only, check: |
 | `ear_*` | | two wall ears, filleted into the body, 4.5 mm slots |
 | `mag_hole`, `mag_h`, `mag_sink`, `mag_floor` | 10.1, 2, 0.1, 1.2 | magnet pockets, see [Magnet mount](#magnet-mount) |
@@ -264,7 +264,7 @@ locknut (19 mm across flats, 21 across corners, 5 thick).
 ## Probe glands
 
 All four PG7 knockouts sit on the right wall (x max), the wall nearest the 1-Wire connectors J3A-D at
-x 68.58 (2026-11-26). The model derives them: between the corner screw columns, one row at
+x 68.58 (Daniel, 2026-11-26). The model derives them: between the corner screw columns, one row at
 `gland_wrench` between locknuts placed as close to J3A-D as the columns allow, else two staggered rows
 (the Freenove case). The LILYGO wall is long enough for one row.
 
@@ -355,7 +355,7 @@ The lid label two-colour step above is separate and unchanged.
 Both antennas glue under the lid, each between four corner locators. The LTE flex cannot sit next to
 the GNSS patch (the strip left of the LILYGO is 32 wide, patch and flex need 45), and no wall is free
 for it, so it goes in the right half of the lid, as far from the LILYGO as the lid screws allow. It
-lies over a 5 mm strip of the LILYGO edge and over the carrier. That costs some detuning, a deliberate
+lies over a 5 mm strip of the LILYGO edge and over the carrier. That costs some detuning, by Daniel's
 choice (2026-11-26). An SMA knockout in the top wall takes an external antenna instead, without a
 reprint.
 
@@ -363,7 +363,7 @@ reprint.
 
 | | GNSS patch | LTE flex (`lte_antenna = "lid"`, default) |
 |---|---|---|
-| Size | 25 x 25 x 7 (7 measured 2026-11-26) | 110 x 20 x 0.4 or less (test-fitted 2026-11-24, thickness measured 2026-11-26) |
+| Size | 25 x 25 x 7 (7 measured by Daniel, 2026-11-26) | 110 x 20 x 0.4 or less (test-fitted 2026-11-24, thickness measured 2026-11-26) |
 | Where | flat under the lid in the strip left of the LILYGO (x -1.7 to 23.3, y 83.5 to 108.5, z 45.6 to 52.6), face up to the sky through 2.4 mm of lid | flat under the lid along y, x 56.0 to 76.0, y 4.0 to 114.0 |
 | Over the boards | nothing | 12.0 over the LILYGO top on a 5.1 mm strip of its edge, 43 over the carrier. No heatsink under it, 4.0 over the 8 mm LILYGO top-part keep-out, 8.9 over the USB-C shell |
 | Gap to metal | 7.3 to the LILYGO board edge, 14.6 to the nearest screw, 41.7 to the carrier | 10.0 to the two right lid screws and inserts (`ant_gap`, it sets the x), 32.7 to the GNSS patch |

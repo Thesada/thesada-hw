@@ -60,7 +60,7 @@ dco: ## Every commit since BASE is signed off and authored as DCO_EMAIL
 	tools/check-dco.sh $(BASE) $(DCO_EMAIL)
 
 .PHONY: sanitize
-sanitize: ## No private IPs, internal hosts, local paths, secrets or AI traces in lines added since BASE
+sanitize: ## No private IPs, internal hosts, local paths, secrets or unexpected trailers in lines added since BASE
 	$(PYTHON) tools/sanitize.py $(BASE)
 
 .PHONY: selftest
