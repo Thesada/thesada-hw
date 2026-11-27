@@ -59,6 +59,8 @@ def ceilings(tris, ceil_ids, zmin):
             t = tris[i]
             for a, b in ((0, 1), (1, 2), (2, 0)):
                 e = frozenset((key(t[a]), key(t[b])))
+                if len(e) < 2:
+                    continue
                 others = [j for j in edge_f[e] if j not in cs]
                 if not others:
                     continue
@@ -70,6 +72,8 @@ def ceilings(tris, ceil_ids, zmin):
                 bnd[e] = dz < -1e-4
         adj = defaultdict(list)
         for e in bnd:
+            if len(e) < 2:
+                continue
             u, v = tuple(e)
             adj[u].append(e)
             adj[v].append(e)
@@ -123,7 +127,7 @@ def main(path, limit=45.0):
             ceil_ids.append(i)
         else:
             ang = math.degrees(math.acos(-nz))
-            slopes.append((round(90 - ang, 1), round(min(a[2], b[2], c[2]) - zmin, 2), round(ln / 2, 3)))
+            slopes.append((90 - ang, min(a[2], b[2], c[2]) - zmin, ln / 2))
     bad = 0
     for z, x0, x1, y0, y1, ar, hole, fl in sorted(ceilings(tris, ceil_ids, zmin)):
         if ar < 0.05:
@@ -135,7 +139,7 @@ def main(path, limit=45.0):
     tot = sum(s[2] for s in slopes)
     print(f"sloped overhangs over {limit:.0f} deg: {len(slopes)} facets, {tot:.2f} mm2")
     for s in sorted(slopes, key=lambda s: -s[2])[:8]:
-        print(f"  overhang {s[0]} deg from vertical at z={s[1]} area {s[2]}")
+        print(f"  overhang {s[0]:.1f} deg from vertical at z={s[1]:.2f} area {s[2]:.3f}")
     return 1 if tot > 0.5 or bad else 0
 
 if __name__ == '__main__':

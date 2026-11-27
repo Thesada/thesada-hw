@@ -19,7 +19,7 @@ A shorter variant takes a Freenove FNK0085 instead of the LILYGO, see [Freenove 
 | | |
 |---|---|
 | Outside | 104 x 146 x 55 mm (body 49, lid 6), plus two 16 mm wall ears |
-| Seal | TPU ring 2.0 x 2.4 mm in a 3.2 x 3.0 groove, squeezed 25 % to 1.8 by a lid tongue |
+| Seal | TPU ring 2.5 x 2.2 mm in a 3.2 x 3.0 groove, squeezed 12 % to 1.94 by a lid tongue (`tpu_shore` 95, softer TPU changes both) |
 | Lid screws | 4x M3 x 12 DIN 912 from the top into 8 mm long M3 heat-set inserts (`m3_small`) in the body corners, outside the seal line. Buy M3 x 12: insert 8 + lid clamp 2.8 = 10.8 minimum. A 10 mm lid insert needs M3 x 16, a 4 or 6 mm insert takes M3 x 12 too. Insert holes are 4.15 mm (PLA, `m3_small`) with a 0.6 mm 45 deg lead-in chamfer |
 | Insert test | `insert_test`: holes 4.0, 4.2 and 4.4 side by side, labelled. `insert_test_fine` has 4.3, 4.35 and 4.4 and `insert_test_fine_small` has 4.1, 4.15 and 4.2. `ins_d` is 4.35 for `m3_large` in PLA and PETG, 4.15 for `m3_small`. ABS reuses those values as placeholders, check: coupon |
 | Heatsinks | 12.4 mm free above the LILYGO top under the lid. Keep-out for 6 mm stick-on heatsinks on the ESP32-S3 module (20 x 20), SIM7080G (14 x 14) and PMU (9 x 9) |
@@ -380,7 +380,8 @@ reprint.
 ![top wall: SMA knockout, nut and washer clearance](png/sma_wall.png)
 
 Every value is echoed and asserted on every render: both antennas inside the lid pocket with their
-locators, 10 mm from screws, inserts, carrier, XH plugs, LILYGO PCB and cell, the locators clear of the
+locators, the LTE flex 10 mm from all metal (screws, inserts, carrier, XH plugs, LILYGO PCB and cell), the
+GNSS patch 7 mm from any metal and 10 mm from the carrier, the cell, the screws and the inserts, the locators clear of the
 heatsinks and the LILYGO top parts, the SMA clearance off boards, standoffs, floor and rim chamfer.
 
 RF notes:

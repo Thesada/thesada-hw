@@ -41,7 +41,7 @@ where it comes from, what is still to measure and how to print it.
 
 `make` lists the targets. `make setup && make test` runs every check, OpenSCAD in
 the pinned image (`OPENSCAD_IMAGE` in the [Makefile](Makefile)), so only docker,
-make, git and python3 are needed.
+make, bash, git and python3 are needed.
 
 | Target | Checks |
 |---|---|

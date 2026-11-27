@@ -24,15 +24,15 @@ help: ## List targets (changes nothing)
 ##@ Build
 stl: $(STLS) ## Render every part to stl/, in print orientation
 
-# OpenSCAD exits 0 when it cannot write the file, so an empty one fails too
+# OpenSCAD exits 0 when it cannot write the file, so a missing or empty one fails
 $(STLS): $(OUT)/%.stl: $(SCAD)
-	@mkdir -p $(OUT)
+	@mkdir -p $(OUT) && rm -f $@
 	$(OSCAD) --export-format binstl -D 'part="$*"' -o $@ $(SCAD)
 	@test -s $@ || { rm -f $@; echo "FAIL no output: $@"; exit 1; }
 
 stl-freenove: $(FSTLS) ## Render the Freenove FNK0085 variant to stl/freenove/
 $(FSTLS): $(OUT)/freenove/%.stl: $(SCAD)
-	@mkdir -p $(OUT)/freenove
+	@mkdir -p $(OUT)/freenove && rm -f $@
 	$(OSCAD) --export-format binstl $(FRE) -D 'part="$*"' -o $@ $(SCAD)
 	@test -s $@ || { rm -f $@; echo "FAIL no output: $@"; exit 1; }
 
@@ -73,6 +73,7 @@ test: stl stl-freenove ## Overhang check on every printed part (flat ceilings ar
 	@for f in $(STLS) $(FSTLS); do echo "== $$f"; python3 check_overhang.py $$f || exit 1; done
 
 fresh: ## Compare stl/ with a render in OUT (make fresh OUT=../../build/fresh)
+	@[ "$$(cd $(OUT) 2>/dev/null && pwd -P)" != "$$(cd stl && pwd -P)" ] || { echo "FAIL fresh: OUT is stl/ itself, render into another dir"; exit 1; }
 	python3 ../../tools/stl_compare.py $(OUT) stl $(PARTS:%=%.stl) $(FPARTS:%=freenove/%.stl)
 
 clean: ## Remove rendered files

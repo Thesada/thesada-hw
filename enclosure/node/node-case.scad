@@ -267,6 +267,7 @@ g_comp = tpu_shore >= 95 ? 0.12 : tpu_shore >= 90 ? 0.15 : tpu_shore >= 85 ? 0.2
 g_w = round(10 * 0.885 * groove_w * (1 - g_comp)) / 10;   // widest 0.1 step that keeps the closed groove under 90 % full
 g_play = (groove_w - g_w) / 2;                    // side play per side
 tongue_w = g_w + 0.4;
+assert(tongue_w <= groove_w, str("lid tongue ", tongue_w, " wider than the groove ", groove_w));
 g_squeezed = g_h * (1 - g_comp);
 tongue_h = groove_d - g_squeezed;
 rim_in = lip_t + lip_gap;
@@ -812,7 +813,7 @@ module lid(H = Hb, recess = true) {
     slab(H - lip_h - 1, lip_h + 1) rr(lip_t, r_v - lip_t);
     slab(H - 1, lid_pocket + 1) offset(delta = -0.5) ledge2();
     for (s = screws) translate([s[0], s[1], 0]) screw_hole_lid(H);
-    if (recess && label_depth > 0) slab(zt - label_depth, 1) label2();
+    if (recess && label_depth > 0) slab(zt - label_depth, label_depth + 1) label2();
   }
   slab(H - tongue_h, tongue_h + 0.01) ring2(tongue_w);
   if (gps_on) seat(gps_patch, gps_xy, H, min(3, gps_patch[2]));

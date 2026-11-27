@@ -52,7 +52,7 @@ fresh: render ## Committed STLs match the fresh renders
 
 .PHONY: lint
 lint: dco sanitize ## DCO and sanitize on BASE..HEAD, script syntax
-	bash -n $(wildcard tools/*.sh .[!.]*/*.sh)
+	for f in $(wildcard tools/*.sh .[!.]*/*.sh); do bash -n "$$f" || { echo "FAIL bash -n $$f"; exit 1; }; done
 	$(PYTHON) -m py_compile tools/*.py $(CASE)/*.py
 
 .PHONY: dco

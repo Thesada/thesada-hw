@@ -7,6 +7,7 @@ Patterns are generic on purpose: this file is public, so it names no real host,
 and each is written so it does not match its own source line.
 A line marked `noqa: sanitize` is skipped.
 """
+import codecs
 import os
 import re
 import subprocess
@@ -38,7 +39,7 @@ if EXTRA:
 
 
 def git(*args):
-    return subprocess.run(["git", *args], check=True, capture_output=True, text=True).stdout
+    return subprocess.run(["git", *args], check=True, capture_output=True, text=True, errors="replace").stdout
 
 
 def scan(where, text, hits):
@@ -47,6 +48,13 @@ def scan(where, text, hits):
     for label, rx in PATTERNS:
         if rx.search(text):
             hits.append(f"FAIL [{label}] {where}")
+
+
+def unquote(name):
+    """Git C-quotes a path with special bytes: "b/a\\tb". Plain paths come back as they are."""
+    if not (name.startswith('"') and name.endswith('"')):
+        return name
+    return codecs.escape_decode(name[1:-1].encode())[0].decode("utf-8", "replace")
 
 
 def main(argv):
@@ -58,14 +66,19 @@ def main(argv):
     except subprocess.CalledProcessError:
         sys.exit(f"FAIL sanitize: base {base} not found, fetch it")
     hits = []
-    path, n, added = None, 0, 0
-    for line in git("diff", "-U0", "--no-color", "--no-ext-diff", f"{base}...HEAD").splitlines():
-        if line.startswith("+++ "):
-            path = line[6:] if line.startswith("+++ b/") else None
+    path, n, added, header = None, 0, 0, False
+    diff = git("-c", "core.quotePath=false", "diff", "-U0", "--no-color", "--no-ext-diff", f"{base}...HEAD")
+    for line in diff.splitlines():
+        # File headers sit between "diff --git" and the first hunk. Inside a hunk "+++" is content.
+        if line.startswith("diff --git "):
+            header, path = True, None
+        elif header and line.startswith("+++ "):
+            path = None if line == "+++ /dev/null" else unquote(line[4:])[2:]
         elif line.startswith("@@"):
+            header = False
             m = re.search(r"\+(\d+)", line)
             n = int(m.group(1)) if m else 0
-        elif line.startswith("+") and path:
+        elif line.startswith("+") and path and not header:
             added += 1
             scan(f"{path}:{n}", line[1:], hits)
             n += 1
