@@ -52,7 +52,7 @@ fresh: render ## Committed STLs match the fresh renders
 
 .PHONY: lint
 lint: dco sanitize ## DCO and sanitize on BASE..HEAD, script syntax
-	bash -n tools/*.sh .forgejo/ci-run.sh
+	bash -n $(wildcard tools/*.sh .*/*.sh)
 	$(PYTHON) -m py_compile tools/*.py $(CASE)/*.py
 
 .PHONY: dco
