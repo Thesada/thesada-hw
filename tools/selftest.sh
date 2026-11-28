@@ -131,6 +131,11 @@ printf 'note\f%s\n' "$secret" > seed.txt && git add seed.txt && git commit -q -s
 expect fail sanitize-formfeed python3 "$root/tools/sanitize.py" base
 has "\[secret assignment\]" sanitize-formfeed || { echo "BAD  sanitize-formfeed did not name [secret assignment]"; fails=1; }
 git reset -q --hard HEAD~1
+# same for a carriage return, which text-mode reads would turn into a newline
+printf 'note\r%s\n' "$secret" > seed.txt && git add seed.txt && git commit -q -s -m "chore: seed"
+expect fail sanitize-cr python3 "$root/tools/sanitize.py" base
+has "\[secret assignment\]" sanitize-cr || { echo "BAD  sanitize-cr did not name [secret assignment]"; fails=1; }
+git reset -q --hard HEAD~1
 
 cd "$root"
 [ "$fails" = 0 ] && echo "selftest: every check fires" || { echo "selftest: FAILED"; exit 1; }

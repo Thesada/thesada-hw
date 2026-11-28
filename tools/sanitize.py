@@ -39,7 +39,8 @@ if EXTRA:
 
 
 def git(*args):
-    return subprocess.run(["git", *args], check=True, capture_output=True, text=True, errors="replace").stdout
+    # Bytes, then decode: text mode turns a lone \r into a newline and splits the added line.
+    return subprocess.run(["git", *args], check=True, capture_output=True).stdout.decode("utf-8", "replace")
 
 
 def scan(where, text, hits):
