@@ -68,7 +68,7 @@ def main(argv):
     hits = []
     path, n, added, header = None, 0, 0, False
     diff = git("-c", "core.quotePath=false", "diff", "-U0", "--no-color", "--no-ext-diff", f"{base}...HEAD")
-    for line in diff.splitlines():
+    for line in diff.split("\n"):
         # File headers sit between "diff --git" and the first hunk. Inside a hunk "+++" is content.
         if line.startswith("diff --git "):
             header, path = True, None
